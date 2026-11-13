@@ -15,6 +15,8 @@ export function initInteractions({ posts, getCards }) {
   const previewCategory = document.querySelector('#preview-category');
   const previewShare = document.querySelector('#preview-share');
   let currentPost = null;
+  let previewTrigger = null;
+  let usingDialogFallback = false;
 
   function getScrollBehavior() {
     return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
@@ -22,15 +24,22 @@ export function initInteractions({ posts, getCards }) {
 
   function openPreview(post, card) {
     currentPost = post;
+    previewTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     document.querySelectorAll('#masonry-grid audio, #masonry-grid video').forEach((media) => media.pause());
     const visual = card.querySelector('.post-visual');
     previewArt.replaceChildren(visual.cloneNode(true));
     previewTitle.textContent = post.title;
     previewDescription.textContent = post.description;
     previewCategory.textContent = post.category;
-    if (typeof dialog.showModal === 'function') dialog.showModal();
-    else dialog.setAttribute('open', '');
+    usingDialogFallback = typeof dialog.showModal !== 'function';
+    if (usingDialogFallback) {
+      dialog.setAttribute('open', '');
+      dialog.setAttribute('aria-modal', 'true');
+    } else {
+      dialog.showModal();
+    }
     document.body.classList.add('dialog-open');
+    document.querySelector('.dialog-close').focus();
   }
 
   function stopPreviewMedia() {
@@ -40,12 +49,52 @@ export function initInteractions({ posts, getCards }) {
     });
   }
 
+  function restorePreviewFocus() {
+    if (previewTrigger?.isConnected) previewTrigger.focus();
+    previewTrigger = null;
+  }
+
   function closePreview() {
     stopPreviewMedia();
-    if (typeof dialog.close === 'function' && dialog.open) dialog.close();
-    else dialog.removeAttribute('open');
-    document.body.classList.remove('dialog-open');
+    if (!usingDialogFallback && typeof dialog.close === 'function' && dialog.open) {
+      dialog.close();
+    } else {
+      dialog.removeAttribute('open');
+      dialog.removeAttribute('aria-modal');
+      document.body.classList.remove('dialog-open');
+      restorePreviewFocus();
+    }
   }
+
+  dialog.addEventListener('keydown', (event) => {
+    if (!usingDialogFallback) return;
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closePreview();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+
+    const focusable = Array.from(dialog.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), audio[controls], video[controls], [tabindex]:not([tabindex="-1"])'
+    )).filter((element) => element.getClientRects().length > 0);
+    if (!focusable.length) {
+      event.preventDefault();
+      document.querySelector('.dialog-close').focus();
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement))) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
 
   function copyShareLinkFallback(url) {
     // Clipboard API is restricted to secure contexts; this fallback also supports LAN HTTP previews.
@@ -115,7 +164,12 @@ export function initInteractions({ posts, getCards }) {
   document.querySelector('.dialog-close').addEventListener('click', closePreview);
   document.querySelector('.dialog-dismiss').addEventListener('click', closePreview);
   dialog.addEventListener('click', (event) => { if (event.target === dialog) closePreview(); });
-  dialog.addEventListener('close', () => { stopPreviewMedia(); document.body.classList.remove('dialog-open'); });
+  dialog.addEventListener('close', () => {
+    stopPreviewMedia();
+    document.body.classList.remove('dialog-open');
+    restorePreviewFocus();
+    usingDialogFallback = false;
+  });
   previewShare.addEventListener('click', () => { if (currentPost) sharePost(currentPost); });
 
   const menuToggle = document.querySelector('.menu-toggle');
