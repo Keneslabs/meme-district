@@ -574,3 +574,12 @@ kbd { color: var(--dim); border: 1px solid var(--line); border-radius: 3px; padd
 .maker-preview.has-photo .maker-preview-face{display:none}
 .maker-preview.has-photo .maker-preview-head{opacity:.94}
 .maker-preview.has-photo .maker-preview-foot{opacity:.94}
+
+
+/* Keep the live creator preview aligned with the 1200×1200 PNG export. */
+.maker-preview {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+}
