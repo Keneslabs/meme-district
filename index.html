@@ -81,19 +81,28 @@
           <span class="live-label"><span class="status-dot"></span> FRESH FROM THE FEED</span>
         </div>
         <div class="trend-row">
-          <a class="trend-card trend-lime" href="#feed" data-trend="meme"><span class="trend-number">01 / MEME</span><strong>My brain at<br>2:47 AM</strong><span class="trend-arrow">↗</span><span class="trend-doodle trend-doodle-type" aria-hidden="true">2:47</span></a>
-          <a class="trend-card trend-lilac" href="#feed" data-trend="video"><span class="trend-number">02 / VIDEO</span><strong>Two cats.<br>One brain cell.</strong><span class="trend-arrow">↗</span><span class="trend-doodle trend-doodle-type" aria-hidden="true">PLAY</span></a>
-          <a class="trend-card trend-orange" href="#feed" data-trend="audio"><span class="trend-number">03 / AUDIO</span><strong>The dramatic<br>entrance</strong><span class="trend-arrow">↗</span><span class="trend-doodle trend-doodle-type" aria-hidden="true">SFX</span></a>
+          <a class="trend-card trend-photo" href="#feed" data-trend="meme">
+            <img src="https://images.pexels.com/photos/1753144/pexels-photo-1753144.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=700" alt="" loading="lazy">
+            <span class="trend-copy"><span class="trend-number">01 / MEME</span><strong>My brain at<br>2:47 AM</strong><span class="trend-meta">LATE NIGHT THOUGHTS</span></span><span class="trend-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="trend-card trend-photo" href="#feed" data-trend="video">
+            <img src="https://images.pexels.com/photos/33445317/pexels-photo-33445317.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=700" alt="" loading="lazy">
+            <span class="trend-copy"><span class="trend-number">02 / VIDEO</span><strong>Two cats.<br>One brain cell.</strong><span class="trend-meta">THE DISTRICT VIDEO PICK</span></span><span class="trend-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="trend-card trend-audio-card" href="#feed" data-trend="audio">
+            <span class="audio-art" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="trend-copy"><span class="trend-number">03 / AUDIO</span><strong>The dramatic<br>entrance</strong><span class="trend-meta">ORIGINAL DISTRICT SOUND</span></span><span class="trend-arrow" aria-hidden="true">↗</span>
+          </a>
         </div>
         <div class="mood-check" aria-labelledby="mood-title">
-          <div class="mood-check-copy"><p class="section-kicker">A VERY SCIENTIFIC CHECK-IN</p><h3 id="mood-title">What's the <span>current vibe?</span></h3><p>Pick the mood. No explanation required.</p></div>
+          <div class="mood-check-copy"><p class="section-kicker">CHECK YOUR STATUS</p><h3 id="mood-title">What's your <span>vibe today?</span></h3></div>
           <div class="mood-options" role="group" aria-label="Choose your current mood">
-            <button type="button" class="mood-option" data-mood="locked in"><span class="mood-code">01</span><small>Locked in</small></button>
-            <button type="button" class="mood-option" data-mood="barely online"><span class="mood-code">02</span><small>Barely online</small></button>
-            <button type="button" class="mood-option" data-mood="chaotic"><span class="mood-code">03</span><small>Chaotic</small></button>
-            <button type="button" class="mood-option" data-mood="need coffee"><span class="mood-code">04</span><small>Need coffee</small></button>
+            <button type="button" class="mood-option" data-mood="locked in" aria-pressed="false"><span>Locked in</span></button>
+            <button type="button" class="mood-option" data-mood="barely online" aria-pressed="false"><span>Barely online</span></button>
+            <button type="button" class="mood-option" data-mood="chaotic" aria-pressed="false"><span>Chaotic</span></button>
+            <button type="button" class="mood-option" data-mood="need coffee" aria-pressed="false"><span>Need coffee</span></button>
           </div>
-          <p class="mood-result" id="mood-result" aria-live="polite">Your mood stays on this device for this visit.</p>
+          <p class="mood-result" id="mood-result" aria-live="polite">Choose one. We won't judge.</p>
         </div>
       </section>
 
