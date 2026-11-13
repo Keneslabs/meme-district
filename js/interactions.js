@@ -172,6 +172,7 @@ export function initInteractions({ posts, getCards }) {
       nav.classList.remove('is-open');
       menuToggle.setAttribute('aria-expanded', 'false');
       menuToggle.setAttribute('aria-label', 'Open navigation');
+      menuToggle.focus();
     }
   });
 
