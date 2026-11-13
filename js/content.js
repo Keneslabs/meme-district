@@ -18,10 +18,10 @@ export const posts = [
     search: 'developer coding bug software it works on my machine programming'
   },
   {
-    id: 'deadline-redesign', type: 'meme', size: 'span-4', category: 'STUDENT ENERGY',
-    title: 'Deadline tomorrow', description: 'The assignment is untouched, but the new logo is looking incredible.',
-    line1: 'DEADLINE:', line2: 'TOMORROW.', line3: 'ME: LET ME REDESIGN THE LOGO FIRST.', art: 'art-pink', emoji: '✍️',
-    search: 'student assignment deadline procrastination redesign school university'
+    id: 'deadline-redesign', type: 'meme', size: 'span-4', category: 'WORKPLACE CULTURE',
+    title: 'The meeting could have been an email', description: 'Forty-five minutes, twelve opinions and somehow no actual decision.',
+    line1: 'QUICK 5-MINUTE CALL.', line2: '45 MINUTES LATER.', line3: 'STILL NO ONE KNOWS THE PLAN.', art: 'art-pink', emoji: '✍️',
+    search: 'work office meeting calendar call email corporate discussion no decision'
   },
   {
     id: 'group-project', type: 'meme', size: 'span-8', category: 'TOO RELATABLE',
@@ -95,11 +95,11 @@ export const posts = [
   }
   ,{
     id: 'cat-lecture-focus', type: 'meme', size: 'span-4', category: 'PET LOGIC',
-    title: 'Me during the 8 AM lecture', description: 'Eyes open. Brain buffering. One tiny thought has connected to the Wi-Fi.',
+    title: 'The cat has read the room', description: 'One look across the room and the verdict is already in.',
     imageUrl: 'https://images.pexels.com/photos/33445317/pexels-photo-33445317.jpeg?auto=compress&cs=tinysrgb&w=1100',
-    imageAlt: 'A calico cat staring directly at the camera.', imageTop: 'ME IN THE 8 AM LECTURE', imageBottom: 'PHYSICALLY HERE. SPIRITUALLY LOADING.', imageTag: 'BUFFERING…',
+    imageAlt: 'A calico cat staring directly at the camera.', imageTop: 'THE CAT SAW EVERYTHING', imageBottom: 'AND HAS DECIDED TO SAY NOTHING.', imageTag: 'EVIDENCE COLLECTED',
     imageCredit: 'T. Zhuravel / Pexels', imageSource: 'https://www.pexels.com/photo/calico-cat-staring-at-camera-outdoors-33445317/',
-    search: 'cat lecture sleepy student morning class focus buffering funny animal pexels'
+    search: 'cat judging staring side eye pet expression funny animal pexels'
   },
   {
     id: 'five-minute-nap', type: 'meme', size: 'span-6', category: 'NAP ECONOMICS',
