@@ -507,3 +507,64 @@ kbd { color: var(--dim); border: 1px solid var(--line); border-radius: 3px; padd
   .post-card.span-4 { grid-column: span 1; }
   .post-card.span-6, .post-card.span-8 { grid-column: span 2; }
 }
+
+
+/* Meme Lab photo upload: restrained native control and readable photo-backed preview. */
+.meme-maker-form input[type="file"]{
+  min-height:43px;
+  padding:7px;
+  color:var(--muted);
+  background:#12150f;
+  font-size:9px;
+  cursor:pointer;
+}
+.meme-maker-form input[type="file"]::file-selector-button{
+  min-height:27px;
+  margin-right:10px;
+  padding:0 11px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--surface-2);
+  color:var(--ink);
+  font:700 9px var(--font-body);
+  cursor:pointer;
+}
+.meme-maker-form input[type="file"]::file-selector-button:hover{border-color:rgba(212,250,98,.55)}
+.maker-upload-meta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  min-height:14px;
+  margin-top:-4px;
+  color:var(--dim);
+  font-size:8px;
+  overflow-wrap:anywhere;
+}
+.maker-upload-meta button{
+  flex:0 0 auto;
+  border:0;
+  padding:2px 0;
+  background:transparent;
+  color:var(--lime);
+  font:700 8px var(--font-body);
+  cursor:pointer;
+}
+.maker-upload-meta button:hover{text-decoration:underline}
+.maker-upload-meta button[hidden]{display:none}
+.maker-preview{
+  position:relative;
+  overflow:hidden;
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+.maker-preview.has-photo{color:#fff!important}
+.maker-preview.has-photo>*{position:relative;z-index:1}
+.maker-preview.has-photo .maker-preview-head,
+.maker-preview.has-photo .maker-preview-foot{opacity:.9}
+.maker-preview.has-photo .maker-preview-face{border-color:rgba(255,255,255,.72);filter:drop-shadow(0 3px 12px rgba(0,0,0,.28))}
+@media(max-width:640px){
+  .meme-maker-form input[type="file"]{font-size:8px}
+  .maker-upload-meta{font-size:7px}
+}
