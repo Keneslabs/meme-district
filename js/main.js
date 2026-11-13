@@ -8,7 +8,7 @@ function escapeHtml(value) {
   })[character]);
 }
 
-function visualMarkup(post) {
+function visualMarkup(post, index) {
   if (post.imageUrl) {
     return `<div class="post-visual photo-meme-visual">
       <img class="photo-meme-image" src="${escapeHtml(post.imageUrl)}" alt="${escapeHtml(post.imageAlt || post.title)}" loading="lazy" decoding="async">
@@ -46,7 +46,7 @@ function renderPost(post, index) {
   const safeTitle = escapeHtml(post.title);
   return `<article class="post-card ${escapeHtml(post.size)}" data-id="${escapeHtml(post.id)}" data-type="${escapeHtml(post.type)}" data-search="${escapeHtml(`${post.search} ${post.title} ${post.description}`)}">
     <div class="post-topline"><span class="post-category">${escapeHtml(post.category)}</span><span class="post-index">MD / ${String(index + 1).padStart(2, '0')}</span></div>
-    ${visualMarkup(post)}
+    ${visualMarkup(post, index)}
     <div class="post-caption"><h3>${safeTitle}</h3><p>${escapeHtml(post.description)}</p></div>
     <div class="post-actions"><button class="post-action" type="button" data-like aria-pressed="false">♡ Like</button><button class="post-action" type="button" data-share>↗ Share</button><button class="post-action preview-action" type="button" data-preview>View ↗</button></div>
   </article>`;
