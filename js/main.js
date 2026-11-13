@@ -10,7 +10,7 @@ function escapeHtml(value) {
 
 function responsiveImageSrcSet(url) {
   return [480, 760, 1100]
-    .map((width) => `${escapeHtml(url.replace(/([?&]w=)\\d+/, `$1${width}`))} ${width}w`)
+    .map((width) => `${escapeHtml(url.replace(/([?&]w=)\d+/, `$1${width}`))} ${width}w`)
     .join(', ');
 }
 
