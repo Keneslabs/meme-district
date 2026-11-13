@@ -66,7 +66,9 @@ export function initInteractions({ posts, getCards }) {
   }
 
   async function sharePost(post) {
-    const shareData = { title: `MEME DISTRICT — ${post.title}`, text: post.description, url: `${location.href.split('#')[0]}#${post.id}` };
+    const canonicalUrl = document.querySelector('link[rel="canonical"]')?.href || `${location.origin}${location.pathname}`;
+    const shareUrl = new URL(`#${encodeURIComponent(post.id)}`, canonicalUrl).href;
+    const shareData = { title: `MEME DISTRICT — ${post.title}`, text: post.description, url: shareUrl };
     try {
       if (typeof navigator.share === 'function') {
         await navigator.share(shareData);
