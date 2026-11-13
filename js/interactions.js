@@ -227,7 +227,7 @@ export function initInteractions({ posts, getCards }) {
         if (uploadedImageUrl) URL.revokeObjectURL(uploadedImageUrl);
         uploadedImage = nextImage;
         uploadedImageUrl = nextUrl;
-        imageName.textContent = file.name;
+        imageName.textContent = 'PHOTO READY · STORED LOCALLY';
         clearImageButton.hidden = false;
         updateMaker();
         showToast('Photo added. It stays on this device.');
@@ -321,21 +321,23 @@ export function initInteractions({ posts, getCards }) {
 
       drawWrapped(topInput.value.trim() || 'YOUR TOP LINE', 300, 86, 1010, 94);
 
-      // Original geometric District seal: consistent across operating systems.
-      ctx.save();
-      ctx.translate(600, 650);
-      ctx.strokeStyle = foreground;
-      ctx.lineWidth = 5;
-      ctx.globalAlpha = .22;
-      ctx.beginPath(); ctx.arc(0, 0, 112, 0, Math.PI * 2); ctx.stroke();
-      ctx.beginPath(); ctx.arc(0, 0, 82, 0, Math.PI * 2); ctx.stroke();
-      ctx.globalAlpha = 1;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.font = '900 82px Arial, sans-serif';
-      ctx.fillStyle = foreground;
-      ctx.fillText('MD', 0, 0);
-      ctx.restore();
+      if (!uploadedImage) {
+        // Keep the geometric District seal on graphic templates, not over a user's photo.
+        ctx.save();
+        ctx.translate(600, 650);
+        ctx.strokeStyle = foreground;
+        ctx.lineWidth = 5;
+        ctx.globalAlpha = .22;
+        ctx.beginPath(); ctx.arc(0, 0, 112, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(0, 0, 82, 0, Math.PI * 2); ctx.stroke();
+        ctx.globalAlpha = 1;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = '900 82px Arial, sans-serif';
+        ctx.fillStyle = foreground;
+        ctx.fillText('MD', 0, 0);
+        ctx.restore();
+      }
 
       drawWrapped(bottomInput.value.trim() || 'YOUR PUNCHLINE', 890, 82, 1010, 94);
       ctx.fillStyle = foreground;

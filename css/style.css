@@ -568,3 +568,9 @@ kbd { color: var(--dim); border: 1px solid var(--line); border-radius: 3px; padd
   .meme-maker-form input[type="file"]{font-size:8px}
   .maker-upload-meta{font-size:7px}
 }
+
+
+/* Photo memes stay photo-first: no central monogram over the subject. */
+.maker-preview.has-photo .maker-preview-face{display:none}
+.maker-preview.has-photo .maker-preview-head{opacity:.94}
+.maker-preview.has-photo .maker-preview-foot{opacity:.94}
