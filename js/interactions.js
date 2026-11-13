@@ -222,9 +222,21 @@ export function initInteractions({ posts, getCards }) {
         lines.slice(0, 3).forEach((item, index) => ctx.fillText(item, 600, y + index * lineHeight, maxWidth));
       }
       drawWrapped(topInput.value.trim() || 'YOUR TOP LINE', 300, 86, 1010, 94);
+      // Original geometric District seal: consistent across operating systems.
+      ctx.save();
+      ctx.translate(600, 650);
+      ctx.strokeStyle = theme.fg;
+      ctx.lineWidth = 5;
+      ctx.globalAlpha = .22;
+      ctx.beginPath(); ctx.arc(0, 0, 112, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(0, 0, 82, 0, Math.PI * 2); ctx.stroke();
+      ctx.globalAlpha = 1;
       ctx.textAlign = 'center';
-      ctx.font = '150px "Segoe UI Emoji", "Apple Color Emoji", sans-serif';
-      ctx.fillText('🫠', 600, 700);
+      ctx.textBaseline = 'middle';
+      ctx.font = '900 82px Arial, sans-serif';
+      ctx.fillStyle = theme.fg;
+      ctx.fillText('MD', 0, 0);
+      ctx.restore();
       drawWrapped(bottomInput.value.trim() || 'YOUR PUNCHLINE', 890, 82, 1010, 94);
       ctx.fillStyle = theme.fg;
       ctx.globalAlpha = .65;
