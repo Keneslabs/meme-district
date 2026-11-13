@@ -280,3 +280,25 @@ kbd { color: var(--dim); border: 1px solid var(--line); border-radius: 3px; padd
   .maker-preview { min-height: 280px; padding: 17px; transform: none; }
   .maker-preview > strong { font-size: clamp(22px, 7vw, 34px); }
 }
+
+
+/* Editorial art direction: a coherent graphic system replaces emoji-led decoration. */
+.hero-proof-mark{width:78px;height:29px;display:flex;align-items:center;gap:4px;color:var(--lime)}
+.hero-proof-mark span{font:800 11px var(--font-display);letter-spacing:.08em;margin-right:4px}
+.hero-proof-mark i{display:block;width:5px;height:5px;border:1px solid var(--lime);transform:rotate(45deg)}
+.feature-artwork{position:relative;height:190px;margin:20px auto 8px;padding:12px 4px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;border-top:1px solid rgba(23,26,16,.45);border-bottom:1px solid rgba(23,26,16,.45)}
+.feature-art-index,.feature-art-caption{position:relative;z-index:2;font:800 8px var(--font-display);letter-spacing:.16em;color:#4d5b29}
+.feature-artwork strong{position:relative;z-index:2;font:800 clamp(40px,5vw,59px)/.82 var(--font-display);letter-spacing:-.09em}
+.feature-artwork strong span{display:inline-block;animation:feature-cursor 1s steps(2,end) infinite}
+.feature-art-ring{position:absolute;width:158px;height:158px;right:12px;top:15px;border:1px solid rgba(23,26,16,.22);border-radius:50%;box-shadow:0 0 0 18px rgba(23,26,16,.035),0 0 0 38px rgba(23,26,16,.025)}
+@keyframes feature-cursor{50%{opacity:0}}
+.art-index{position:absolute;right:13px;bottom:12px;z-index:2;font:800 8px var(--font-display);letter-spacing:.16em;opacity:.62}
+.trend-doodle-type{font:800 34px/.9 var(--font-display)!important;letter-spacing:-.08em}
+.mood-code{display:grid;place-items:center;width:29px;height:29px;border:1px solid currentColor;border-radius:50%;font:800 9px var(--font-display);letter-spacing:.04em}
+.maker-preview-face{position:relative;width:112px;height:112px;display:flex;align-items:center;justify-content:center;gap:5px;border:1px solid currentColor;border-radius:50%;font:800 26px var(--font-display);letter-spacing:-.08em}
+.maker-preview-face span{position:relative;z-index:2}
+.maker-preview-face i{position:absolute;width:7px;height:7px;border:1px solid currentColor;border-radius:50%}
+.maker-preview-face i:nth-of-type(1){top:13px;left:18px}
+.maker-preview-face i:nth-of-type(2){top:13px;right:18px}
+.maker-preview-face i:nth-of-type(3){bottom:13px;left:calc(50% - 3px)}
+@media(prefers-reduced-motion:reduce){.feature-artwork strong span{animation:none}}
