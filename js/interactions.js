@@ -17,6 +17,7 @@ export function initInteractions({ posts, getCards }) {
   let currentPost = null;
   let previewTrigger = null;
   let usingDialogFallback = false;
+  const siteShell = document.querySelector('.site-shell');
 
   function getScrollBehavior() {
     return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
@@ -35,6 +36,8 @@ export function initInteractions({ posts, getCards }) {
     if (usingDialogFallback) {
       dialog.setAttribute('open', '');
       dialog.setAttribute('aria-modal', 'true');
+      siteShell?.setAttribute('inert', '');
+      siteShell?.setAttribute('aria-hidden', 'true');
     } else {
       dialog.showModal();
     }
@@ -61,6 +64,8 @@ export function initInteractions({ posts, getCards }) {
     } else {
       dialog.removeAttribute('open');
       dialog.removeAttribute('aria-modal');
+      siteShell?.removeAttribute('inert');
+      siteShell?.removeAttribute('aria-hidden');
       document.body.classList.remove('dialog-open');
       restorePreviewFocus();
       usingDialogFallback = false;
