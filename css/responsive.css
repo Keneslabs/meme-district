@@ -116,3 +116,17 @@
   .preview-art .post-visual { min-height: 230px; }
   .preview-details h2 { font-size: 22px; }
 }
+
+
+/* Feed artwork legibility on compact screens. */
+@media (max-width: 640px) {
+  .editorial-art { padding: 25px 12px 30px; }
+  .editorial-art .art-kicker { left: 11px; top: 10px; font-size: 5.5px; }
+  .editorial-art .art-copy { width: 82%; max-width: 82%; }
+  .editorial-art .art-copy strong { font-size: clamp(13px, 4vw, 18px); line-height: .98; }
+  .editorial-art .art-subcopy { margin-top: 8px; font-size: 5.5px; letter-spacing: .08em; }
+  .art-object { right: 2%; width: 24%; max-width: 56px; opacity: .15; }
+  .art-orange .art-object, .art-dark .art-object { width: 23%; right: 4%; }
+  .art-paper .art-object, .art-pink .art-object, .art-lime .art-object, .art-blue .art-object, .art-mono .art-object { width: 27%; }
+  .editorial-art .art-index { right: 7px; bottom: 7px; font-size: 5px; }
+}
