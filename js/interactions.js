@@ -16,6 +16,10 @@ export function initInteractions({ posts, getCards }) {
   const previewShare = document.querySelector('#preview-share');
   let currentPost = null;
 
+  function getScrollBehavior() {
+    return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+  }
+
   function openPreview(post, card) {
     currentPost = post;
     document.querySelectorAll('#masonry-grid audio, #masonry-grid video').forEach((media) => media.pause());
@@ -135,7 +139,7 @@ export function initInteractions({ posts, getCards }) {
       return;
     }
     const chosen = cards[Math.floor(Math.random() * cards.length)];
-    chosen.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    chosen.scrollIntoView({ behavior: getScrollBehavior(), block: 'center' });
     chosen.classList.remove('spotlight');
     requestAnimationFrame(() => chosen.classList.add('spotlight'));
     showToast('The district has chosen your next laugh.');
@@ -154,7 +158,7 @@ export function initInteractions({ posts, getCards }) {
     card.classList.remove('spotlight');
     requestAnimationFrame(() => card.classList.add('spotlight'));
     if (window.location.hash === `#${postId}`) {
-      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      card.scrollIntoView({ behavior: getScrollBehavior(), block: 'start' });
     } else {
       window.location.hash = postId;
     }
