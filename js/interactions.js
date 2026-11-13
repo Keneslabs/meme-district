@@ -63,6 +63,7 @@ export function initInteractions({ posts, getCards }) {
       dialog.removeAttribute('aria-modal');
       document.body.classList.remove('dialog-open');
       restorePreviewFocus();
+      usingDialogFallback = false;
     }
   }
 
