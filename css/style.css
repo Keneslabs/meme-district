@@ -485,7 +485,12 @@ kbd { color: var(--dim); border: 1px solid var(--line); border-radius: 3px; padd
 .post-caption p{font-size:10px;line-height:1.65;max-width:48ch}
 .post-actions{padding:13px 14px 15px}
 .post-action{min-height:31px;padding-inline:11px}
-.post-action:focus-visible,.filter-chip:focus-visible,.search-box:focus-within{outline:2px solid var(--lime);outline-offset:3px}
+/* Keep keyboard focus visible across navigation, forms, dialogs and media controls. */
+:where(a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,audio[controls],video[controls],[tabindex]:not([tabindex="-1"])):focus-visible,
+.search-box:focus-within {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
 .photo-meme-visual{border-radius:6px}
 .photo-meme-image{filter:saturate(.88) contrast(1.04)}
 .photo-meme-visual::before{background:linear-gradient(180deg,rgba(8,10,8,.05) 0%,rgba(8,10,8,.12) 28%,rgba(8,10,8,.9) 100%)}
