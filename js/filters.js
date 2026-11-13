@@ -20,7 +20,7 @@ export function initFilters({ getCards, searchInput, filterButtons, resultCount,
       if (!empty) {
         empty = document.createElement('div');
         empty.className = 'empty-state';
-        empty.innerHTML = '<strong>No memes in this postcode.</strong><span>Try another search or clear the filters.</span>';
+        empty.innerHTML = '<strong>Nothing on this block.</strong><span>Try another search or clear the filters.</span>';
         document.querySelector('#masonry-grid').append(empty);
       }
     } else if (empty) {
