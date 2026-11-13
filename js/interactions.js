@@ -305,7 +305,7 @@ export function initInteractions({ posts, getCards }) {
       function drawWrapped(text, y, fontSize, maxWidth, lineHeight) {
         ctx.font = `900 ${fontSize}px Arial, sans-serif`;
         ctx.textAlign = 'center';
-        const words = text.toUpperCase().split(/\\s+/).filter(Boolean);
+        const words = text.toUpperCase().split(/\s+/).filter(Boolean);
         const lines = [];
         let line = '';
         for (const word of words) {
