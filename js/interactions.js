@@ -15,12 +15,15 @@ export function initInteractions({ posts, getCards }) {
   const previewCategory = document.querySelector('#preview-category');
   const previewShare = document.querySelector('#preview-share');
   let currentPost = null;
+  let previewOpener = null;
+  const supportsModalDialog = typeof dialog.showModal === 'function';
 
   function getScrollBehavior() {
     return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
   }
 
   function openPreview(post, card) {
+    previewOpener = document.activeElement;
     currentPost = post;
     document.querySelectorAll('#masonry-grid audio, #masonry-grid video').forEach((media) => media.pause());
     const visual = card.querySelector('.post-visual');
@@ -28,8 +31,14 @@ export function initInteractions({ posts, getCards }) {
     previewTitle.textContent = post.title;
     previewDescription.textContent = post.description;
     previewCategory.textContent = post.category;
-    if (typeof dialog.showModal === 'function') dialog.showModal();
-    else dialog.setAttribute('open', '');
+    if (supportsModalDialog) {
+      dialog.showModal();
+    } else {
+      dialog.setAttribute('role', 'dialog');
+      dialog.setAttribute('aria-modal', 'true');
+      dialog.setAttribute('open', '');
+      dialog.querySelector('.dialog-close')?.focus();
+    }
     document.body.classList.add('dialog-open');
   }
 
@@ -42,9 +51,19 @@ export function initInteractions({ posts, getCards }) {
 
   function closePreview() {
     stopPreviewMedia();
-    if (typeof dialog.close === 'function' && dialog.open) dialog.close();
-    else dialog.removeAttribute('open');
+    if (supportsModalDialog && dialog.open) {
+      dialog.close();
+    } else {
+      dialog.removeAttribute('open');
+      dialog.removeAttribute('aria-modal');
+      restorePreviewFocus();
+    }
     document.body.classList.remove('dialog-open');
+  }
+
+  function restorePreviewFocus() {
+    if (previewOpener?.isConnected) previewOpener.focus();
+    previewOpener = null;
   }
 
   function copyShareLinkFallback(url) {
@@ -115,7 +134,39 @@ export function initInteractions({ posts, getCards }) {
   document.querySelector('.dialog-close').addEventListener('click', closePreview);
   document.querySelector('.dialog-dismiss').addEventListener('click', closePreview);
   dialog.addEventListener('click', (event) => { if (event.target === dialog) closePreview(); });
-  dialog.addEventListener('close', () => { stopPreviewMedia(); document.body.classList.remove('dialog-open'); });
+  dialog.addEventListener('close', () => {
+    stopPreviewMedia();
+    document.body.classList.remove('dialog-open');
+    restorePreviewFocus();
+  });
+
+  // Native modal dialogs provide focus containment and Escape handling. Keep the fallback equivalent.
+  dialog.addEventListener('keydown', (event) => {
+    if (supportsModalDialog || !dialog.hasAttribute('open')) return;
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closePreview();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+    const focusable = Array.from(dialog.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter((element) => element.getClientRects().length > 0);
+    if (!focusable.length) {
+      event.preventDefault();
+      dialog.querySelector('.dialog-close')?.focus();
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement))) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
   previewShare.addEventListener('click', () => { if (currentPost) sharePost(currentPost); });
 
   const menuToggle = document.querySelector('.menu-toggle');
