@@ -8,10 +8,16 @@ function escapeHtml(value) {
   })[character]);
 }
 
+function responsiveImageSrcSet(url) {
+  return [480, 760, 1100]
+    .map((width) => `${escapeHtml(url.replace(/([?&]w=)\\d+/, `$1${width}`))} ${width}w`)
+    .join(', ');
+}
+
 function visualMarkup(post, index) {
   if (post.imageUrl) {
     return `<div class="post-visual photo-meme-visual">
-      <img class="photo-meme-image" src="${escapeHtml(post.imageUrl)}" alt="${escapeHtml(post.imageAlt || post.title)}" loading="lazy" decoding="async">
+      <img class="photo-meme-image" src="${escapeHtml(post.imageUrl)}" srcset="${responsiveImageSrcSet(post.imageUrl)}" sizes="(max-width: 900px) 50vw, 50vw" alt="${escapeHtml(post.imageAlt || post.title)}" loading="lazy" decoding="async">
       <span class="photo-meme-tag">${escapeHtml(post.imageTag || 'DISTRICT SNAPSHOT')}</span>
       <div class="photo-meme-copy"><span>${escapeHtml(post.imageTop || '')}</span><strong>${escapeHtml(post.imageBottom || post.title)}</strong></div>
       <a class="photo-meme-credit" href="${escapeHtml(post.imageSource)}" target="_blank" rel="noopener noreferrer" aria-label="Photo credit: ${escapeHtml(post.imageCredit || 'Pexels')}">PHOTO: ${escapeHtml(post.imageCredit || 'PEXELS')}</a>
