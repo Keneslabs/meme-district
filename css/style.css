@@ -583,3 +583,7 @@ kbd { color: var(--dim); border: 1px solid var(--line); border-radius: 3px; padd
   min-height: 0;
   aspect-ratio: 1 / 1;
 }
+
+
+/* Leave breathing room when a shared post anchor is opened directly. */
+.post-card[id] { scroll-margin-top: 24px; }
