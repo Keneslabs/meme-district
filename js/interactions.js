@@ -279,13 +279,6 @@ export function initInteractions({ posts, getCards }) {
         ctx.fillStyle = overlay;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.strokeStyle = theme.accent;
-        ctx.lineWidth = 8;
-        ctx.globalAlpha = .82;
-        ctx.beginPath();
-        ctx.arc(1040, 172, 84, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.globalAlpha = 1;
       } else {
         ctx.fillStyle = theme.bg;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
