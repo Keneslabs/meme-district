@@ -210,9 +210,9 @@ export function initInteractions({ posts, getCards }) {
         showToast('Choose a JPG, PNG or WEBP image.');
         return;
       }
-      if (file.size > 8 * 1024 * 1024) {
+      if (file.size > 30 * 1024 * 1024) {
         imageInput.value = '';
-        showToast('That image is over the 8 MB limit.');
+        showToast('That image is over the 30 MB limit.');
         return;
       }
 
