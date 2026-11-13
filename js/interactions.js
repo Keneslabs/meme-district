@@ -43,19 +43,44 @@ export function initInteractions({ posts, getCards }) {
     document.body.classList.remove('dialog-open');
   }
 
+  function copyShareLinkFallback(url) {
+    // Clipboard API is restricted to secure contexts; this fallback also supports LAN HTTP previews.
+    const field = document.createElement('textarea');
+    field.value = url;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.opacity = '0';
+    field.style.pointerEvents = 'none';
+    document.body.appendChild(field);
+    field.select();
+    field.setSelectionRange(0, field.value.length);
+    let copied = false;
+    try { copied = document.execCommand('copy'); } catch (_) { copied = false; }
+    field.remove();
+    if (copied) {
+      showToast('Link copied. Send it to the group chat.');
+      return true;
+    }
+    window.prompt('Copy this MEME DISTRICT link:', url);
+    return false;
+  }
+
   async function sharePost(post) {
     const shareData = { title: `MEME DISTRICT — ${post.title}`, text: post.description, url: `${location.href.split('#')[0]}#${post.id}` };
     try {
-      if (navigator.share) {
+      if (typeof navigator.share === 'function') {
         await navigator.share(shareData);
       } else if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(shareData.url);
         showToast('Link copied. Send it to the group chat.');
       } else {
-        showToast('Sharing is not available in this browser.');
+        copyShareLinkFallback(shareData.url);
       }
     } catch (error) {
-      if (error?.name !== 'AbortError') showToast('Could not share this post right now.');
+      if (error?.name !== 'AbortError') {
+        const copied = copyShareLinkFallback(shareData.url);
+        if (!copied) showToast('Select and copy the link to share this post.');
+      }
     }
   }
 
