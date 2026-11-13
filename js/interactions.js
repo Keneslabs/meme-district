@@ -226,10 +226,17 @@ export function initInteractions({ posts, getCards }) {
     }
   });
   document.addEventListener('keydown', (event) => {
-    if (event.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
-      event.preventDefault();
-      document.querySelector('#feed-search').focus();
-    }
+    if (event.key !== '/' || event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (dialog.open) return;
+
+    const target = event.target;
+    if (target instanceof HTMLElement && (
+      target.isContentEditable ||
+      target.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"]')
+    )) return;
+
+    event.preventDefault();
+    document.querySelector('#feed-search').focus();
   });
 
   // Keep the page quiet: only one audio/video element may play at a time.
