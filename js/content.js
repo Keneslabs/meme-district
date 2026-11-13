@@ -50,10 +50,10 @@ export const posts = [
     search: 'audio sound effect cartoon dramatic entrance boing funny'
   },
   {
-    id: 'low-battery', type: 'meme', size: 'span-4', category: 'SOCIAL BATTERY',
-    title: 'Social battery: 1%', description: 'The function has stopped responding. Please try again after snacks and silence.',
-    line1: 'SOCIAL', line2: 'BATTERY:', line3: '1% — LOW POWER MODE', art: 'art-dark', emoji: '🔋',
-    search: 'social battery introvert tired people low energy relatable'
+    id: 'low-battery', type: 'meme', size: 'span-4', category: 'EVERYDAY MOMENTS',
+    title: 'The waiter said “you too”', description: 'They wished you an enjoyable meal. You accidentally wished them the same. A difficult evening for everyone.',
+    line1: 'WAITER: ENJOY', line2: 'YOUR MEAL.', line3: 'ME: YOU TOO. I NEED TO LEAVE.', art: 'art-dark', emoji: '🔋',
+    search: 'waiter enjoy your meal you too awkward restaurant social interaction everyday humour'
   },
   {
     id: 'read-receipt', type: 'meme', size: 'span-4', category: 'CHAT CULTURE',
@@ -62,10 +62,10 @@ export const posts = [
     search: 'chat messages text seen read receipt texting friendship funny'
   },
   {
-    id: 'alarm-clock', type: 'meme', size: 'span-4', category: 'MORNING SHIFT',
-    title: 'Me vs. the alarm clock', description: 'A rivalry older than the internet. The alarm remains undefeated.',
-    line1: 'ALARM:', line2: 'GOOD MORNING!', line3: "ME: LET'S NOT MAKE THIS WEIRD.", art: 'art-orange', emoji: '⏰',
-    search: 'alarm clock morning sleepy wake up funny routine'
+    id: 'alarm-clock', type: 'meme', size: 'span-4', category: 'MUSIC CULTURE',
+    title: 'The aux cord is a trust exercise', description: 'One song can make you the DJ for the rest of the trip. Choose carefully.',
+    line1: 'PASSING YOU', line2: 'THE AUX CORD.', line3: 'THIS FRIENDSHIP IS IN YOUR HANDS.', art: 'art-orange', emoji: '⏰',
+    search: 'music aux cord car ride playlist friends DJ song choice music taste'
   },
   {
     id: 'tab-collector', type: 'meme', size: 'span-6', category: 'TECH LIFE',
