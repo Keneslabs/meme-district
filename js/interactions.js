@@ -37,6 +37,8 @@ export function initInteractions({ posts, getCards }) {
       dialog.setAttribute('role', 'dialog');
       dialog.setAttribute('aria-modal', 'true');
       dialog.setAttribute('open', '');
+      document.querySelector('.site-shell')?.setAttribute('inert', '');
+      document.querySelector('.site-shell')?.setAttribute('aria-hidden', 'true');
       dialog.querySelector('.dialog-close')?.focus();
     }
     document.body.classList.add('dialog-open');
@@ -56,6 +58,8 @@ export function initInteractions({ posts, getCards }) {
     } else {
       dialog.removeAttribute('open');
       dialog.removeAttribute('aria-modal');
+      document.querySelector('.site-shell')?.removeAttribute('inert');
+      document.querySelector('.site-shell')?.removeAttribute('aria-hidden');
       restorePreviewFocus();
     }
     document.body.classList.remove('dialog-open');
