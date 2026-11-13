@@ -39,7 +39,14 @@ function visualMarkup(post, index) {
       <span class="audio-credit">ORIGINAL DISTRICT SOUND</span>
     </div>`;
   }
-  return `<div class="post-visual ${escapeHtml(post.art)}"><div class="art-copy">${escapeHtml(post.line1)}<br>${escapeHtml(post.line2)}<span class="art-subcopy">${escapeHtml(post.line3)}</span></div><span class="art-index" aria-hidden="true">MD / ${String(index + 1).padStart(2, "0")}</span></div>`;
+  const artClass = escapeHtml(post.art || 'art-lime');
+  const artLabel = escapeHtml(post.category || 'DISTRICT ORIGINAL');
+  return `<div class="post-visual editorial-art ${artClass}" role="img" aria-label="${escapeHtml([post.line1, post.line2, post.line3].filter(Boolean).join('. '))}">
+    <span class="art-kicker">${artLabel}</span>
+    <div class="art-copy"><strong>${escapeHtml(post.line1)}<br>${escapeHtml(post.line2)}</strong><span class="art-subcopy">${escapeHtml(post.line3)}</span></div>
+    <span class="art-object" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="art-index" aria-hidden="true">DISTRICT ORIGINAL / ${String(index + 1).padStart(2, '0')}</span>
+  </div>`;
 }
 
 function renderPost(post, index) {
