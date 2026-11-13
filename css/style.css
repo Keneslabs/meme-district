@@ -499,3 +499,11 @@ kbd { color: var(--dim); border: 1px solid var(--line); border-radius: 3px; padd
  .post-actions{padding:9px 7px 10px;gap:4px}
  .post-action{min-height:26px;padding-inline:7px;font-size:7px}
 }
+
+
+/* Balanced three-column feed on desktop: two-up feature cards + single cards. */
+@media (min-width: 901px) {
+  .masonry-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .post-card.span-4 { grid-column: span 1; }
+  .post-card.span-6, .post-card.span-8 { grid-column: span 2; }
+}
