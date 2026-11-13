@@ -111,11 +111,11 @@ export const posts = [
   },
   {
     id: 'desk-tabs', type: 'meme', size: 'span-6', category: 'STUDY SURVIVAL',
-    title: 'I opened one tab for research', description: 'The assignment is still untouched, but the browser now has a rich social life.',
+    title: 'The desk became the side quest', description: 'Came to finish one assignment. Somehow started producing a desk-setup documentary.',
     imageUrl: 'https://images.pexels.com/photos/4997819/pexels-photo-4997819.jpeg?auto=compress&cs=tinysrgb&w=1100',
-    imageAlt: 'A desk with a laptop, camera, film and a cup of coffee.', imageTop: 'JUST ONE TAB FOR RESEARCH', imageBottom: '27 TABS LATER: WHAT WAS THE QUESTION?', imageTag: 'TAB CITY',
+    imageAlt: 'A desk with a laptop, camera, film and a cup of coffee.', imageTop: 'ONE ASSIGNMENT TO FINISH', imageBottom: 'SOMEHOW PRODUCED A DESK TOUR.', imageTag: 'SIDE QUEST',
     imageCredit: 'Rachel Claire / Pexels', imageSource: 'https://www.pexels.com/photo/messy-desk-with-laptop-camera-films-and-cup-with-coffee-4997819/',
-    search: 'laptop desk research browser tabs computer study procrastination coffee'
+    search: 'desk setup laptop camera coffee workspace side quest assignment study'
   },
   {
     id: 'study-plan', type: 'meme', size: 'span-4', category: 'STUDENT ENERGY',
@@ -127,11 +127,11 @@ export const posts = [
   },
   {
     id: 'deadline-entered-room', type: 'meme', size: 'span-4', category: 'DEADLINE PANIC',
-    title: 'When the deadline enters the room', description: 'The desk has evidence of work. The laptop has evidence of everything else.',
+    title: 'The notes have become a crime scene', description: 'Every sticky note is a clue. None of them explain what the lecturer meant.',
     imageUrl: 'https://images.pexels.com/photos/5185074/pexels-photo-5185074.jpeg?auto=compress&cs=tinysrgb&w=1100',
-    imageAlt: 'A cluttered study desk with papers and sticky notes.', imageTop: 'DEADLINE: TOMORROW', imageBottom: 'ME: LET ME ORGANIZE MY DESK FIRST.', imageTag: 'URGENT-ish',
+    imageAlt: 'A cluttered study desk with papers and sticky notes.', imageTop: 'REVISION NOTES:', imageBottom: 'A CASE WITH NO CLEAR SUSPECT.', imageTag: 'STILL INVESTIGATING',
     imageCredit: 'cottonbro studio / Pexels', imageSource: 'https://www.pexels.com/photo/crumpled-papers-and-sticky-notes-5185074/',
-    search: 'deadline tomorrow papers sticky notes desk procrastination assignment chaos'
+    search: 'revision notes sticky notes papers studying confusing lecture investigation'
   },
   {
     id: 'quick-quiz', type: 'meme', size: 'span-4', category: 'CAMPUS SURVIVAL',
