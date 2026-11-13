@@ -141,10 +141,23 @@ export function initInteractions({ posts, getCards }) {
     showToast('The district has chosen your next laugh.');
   });
 
-  document.querySelectorAll('[data-trend]').forEach((link) => link.addEventListener('click', () => {
-    const targetFilter = link.dataset.trend;
-    const button = document.querySelector(`[data-filter="${targetFilter}"]`);
-    if (button) button.click();
+  document.querySelectorAll('[data-post]').forEach((link) => link.addEventListener('click', (event) => {
+    const postId = link.dataset.post;
+    const card = document.getElementById(postId);
+    if (!card) return;
+
+    event.preventDefault();
+    if (card.classList.contains('is-hidden')) {
+      document.querySelector('#clear-filters').click();
+    }
+
+    card.classList.remove('spotlight');
+    requestAnimationFrame(() => card.classList.add('spotlight'));
+    if (window.location.hash === `#${postId}`) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.location.hash = postId;
+    }
   }));
 
   document.querySelector('#feed-search').addEventListener('keydown', (event) => {
