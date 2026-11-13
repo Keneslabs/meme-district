@@ -39,7 +39,7 @@ function visualMarkup(post) {
       <span class="audio-credit">ORIGINAL DISTRICT SOUND</span>
     </div>`;
   }
-  return `<div class="post-visual ${escapeHtml(post.art)}"><div class="art-copy">${escapeHtml(post.line1)}<br>${escapeHtml(post.line2)}<span class="art-subcopy">${escapeHtml(post.line3)}</span></div><span class="art-emoji" aria-hidden="true">${escapeHtml(post.emoji)}</span></div>`;
+  return `<div class="post-visual ${escapeHtml(post.art)}"><div class="art-copy">${escapeHtml(post.line1)}<br>${escapeHtml(post.line2)}<span class="art-subcopy">${escapeHtml(post.line3)}</span></div><span class="art-index" aria-hidden="true">MD / ${String(index + 1).padStart(2, "0")}</span></div>`;
 }
 
 function renderPost(post, index) {
