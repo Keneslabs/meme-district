@@ -51,7 +51,7 @@ function visualMarkup(post, index) {
 
 function renderPost(post, index) {
   const safeTitle = escapeHtml(post.title);
-  return `<article class="post-card ${escapeHtml(post.size)}" data-id="${escapeHtml(post.id)}" data-type="${escapeHtml(post.type)}" data-search="${escapeHtml(`${post.search} ${post.title} ${post.description}`)}">
+  return `<article id="${escapeHtml(post.id)}" class="post-card ${escapeHtml(post.size)}" data-id="${escapeHtml(post.id)}" data-type="${escapeHtml(post.type)}" data-search="${escapeHtml(`${post.search} ${post.title} ${post.description}`)}">
     <div class="post-topline"><span class="post-category">${escapeHtml(post.category)}</span><span class="post-index">MD / ${String(index + 1).padStart(2, '0')}</span></div>
     ${visualMarkup(post, index)}
     <div class="post-caption"><h3>${safeTitle}</h3><p>${escapeHtml(post.description)}</p></div>
