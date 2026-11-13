@@ -165,12 +165,15 @@ export function initInteractions({ posts, getCards }) {
     });
   });
 
-  // Tiny in-browser meme maker. It exports a PNG locally; no content is uploaded.
+  // Tiny in-browser meme maker. Optional photo backgrounds remain local to this browser.
   const makerForm = document.querySelector('#meme-maker-form');
   if (makerForm) {
     const topInput = document.querySelector('#meme-top-text');
     const bottomInput = document.querySelector('#meme-bottom-text');
     const styleInput = document.querySelector('#meme-style');
+    const imageInput = document.querySelector('#meme-image');
+    const imageName = document.querySelector('#meme-image-name');
+    const clearImageButton = document.querySelector('#meme-image-clear');
     const topPreview = document.querySelector('#meme-preview-top');
     const bottomPreview = document.querySelector('#meme-preview-bottom');
     const preview = document.querySelector('#maker-preview');
@@ -180,13 +183,77 @@ export function initInteractions({ posts, getCards }) {
       orange: { bg: '#ff815c', fg: '#281710', accent: '#ffe4a8' },
       paper: { bg: '#f0ead9', fg: '#20241c', accent: '#94a66c' }
     };
+    let uploadedImage = null;
+    let uploadedImageUrl = null;
+    let imageSelection = 0;
+
     const updateMaker = () => {
       topPreview.textContent = topInput.value.trim() || 'YOUR TOP LINE';
       bottomPreview.textContent = bottomInput.value.trim() || 'YOUR PUNCHLINE';
       preview.dataset.theme = styleInput.value;
+      preview.classList.toggle('has-photo', Boolean(uploadedImage));
+      preview.style.backgroundImage = uploadedImageUrl
+        ? `linear-gradient(180deg, rgba(8,10,8,.38), rgba(8,10,8,.58)), url("${uploadedImageUrl}")`
+        : '';
     };
+
     [topInput, bottomInput, styleInput].forEach((input) => input.addEventListener('input', updateMaker));
     styleInput.addEventListener('change', updateMaker);
+
+    imageInput?.addEventListener('change', () => {
+      const file = imageInput.files?.[0];
+      if (!file) return;
+
+      const supportedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!supportedTypes.includes(file.type)) {
+        imageInput.value = '';
+        showToast('Choose a JPG, PNG or WEBP image.');
+        return;
+      }
+      if (file.size > 8 * 1024 * 1024) {
+        imageInput.value = '';
+        showToast('That image is over the 8 MB limit.');
+        return;
+      }
+
+      const selection = ++imageSelection;
+      const nextUrl = URL.createObjectURL(file);
+      const nextImage = new Image();
+      nextImage.onload = () => {
+        if (selection !== imageSelection) {
+          URL.revokeObjectURL(nextUrl);
+          return;
+        }
+        if (uploadedImageUrl) URL.revokeObjectURL(uploadedImageUrl);
+        uploadedImage = nextImage;
+        uploadedImageUrl = nextUrl;
+        imageName.textContent = file.name;
+        clearImageButton.hidden = false;
+        updateMaker();
+        showToast('Photo added. It stays on this device.');
+      };
+      nextImage.onerror = () => {
+        URL.revokeObjectURL(nextUrl);
+        if (selection === imageSelection) {
+          imageInput.value = '';
+          showToast('That image could not be opened.');
+        }
+      };
+      nextImage.src = nextUrl;
+    });
+
+    clearImageButton?.addEventListener('click', () => {
+      imageSelection += 1;
+      if (uploadedImageUrl) URL.revokeObjectURL(uploadedImageUrl);
+      uploadedImage = null;
+      uploadedImageUrl = null;
+      imageInput.value = '';
+      imageName.textContent = 'No photo selected';
+      clearImageButton.hidden = true;
+      updateMaker();
+      showToast('Photo background removed.');
+    });
+
     makerForm.addEventListener('submit', (event) => {
       event.preventDefault();
       const theme = themes[styleInput.value] || themes.lime;
@@ -195,16 +262,46 @@ export function initInteractions({ posts, getCards }) {
       canvas.height = 1200;
       const ctx = canvas.getContext('2d');
       if (!ctx) { showToast('Your browser could not create the meme image.'); return; }
-      ctx.fillStyle = theme.bg;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = theme.accent;
-      ctx.beginPath(); ctx.arc(1010, 180, 95, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = theme.fg;
+
+      const foreground = uploadedImage ? '#ffffff' : theme.fg;
+      if (uploadedImage) {
+        const scale = Math.max(canvas.width / uploadedImage.width, canvas.height / uploadedImage.height);
+        const drawWidth = uploadedImage.width * scale;
+        const drawHeight = uploadedImage.height * scale;
+        const offsetX = (canvas.width - drawWidth) / 2;
+        const offsetY = (canvas.height - drawHeight) / 2;
+        ctx.drawImage(uploadedImage, offsetX, offsetY, drawWidth, drawHeight);
+
+        const overlay = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        overlay.addColorStop(0, 'rgba(5,7,5,.48)');
+        overlay.addColorStop(.48, 'rgba(5,7,5,.24)');
+        overlay.addColorStop(1, 'rgba(5,7,5,.68)');
+        ctx.fillStyle = overlay;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.strokeStyle = theme.accent;
+        ctx.lineWidth = 8;
+        ctx.globalAlpha = .82;
+        ctx.beginPath();
+        ctx.arc(1040, 172, 84, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      } else {
+        ctx.fillStyle = theme.bg;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = theme.accent;
+        ctx.beginPath();
+        ctx.arc(1010, 180, 95, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.fillStyle = foreground;
       ctx.font = '800 28px Arial, sans-serif';
       ctx.textAlign = 'left';
       ctx.fillText('MEME DISTRICT', 76, 82);
       ctx.textAlign = 'right';
       ctx.fillText('YOUR EDITION / 001', 1124, 82);
+
       function drawWrapped(text, y, fontSize, maxWidth, lineHeight) {
         ctx.font = `900 ${fontSize}px Arial, sans-serif`;
         ctx.textAlign = 'center';
@@ -221,11 +318,13 @@ export function initInteractions({ posts, getCards }) {
         ctx.font = `900 ${usableSize}px Arial, sans-serif`;
         lines.slice(0, 3).forEach((item, index) => ctx.fillText(item, 600, y + index * lineHeight, maxWidth));
       }
+
       drawWrapped(topInput.value.trim() || 'YOUR TOP LINE', 300, 86, 1010, 94);
+
       // Original geometric District seal: consistent across operating systems.
       ctx.save();
       ctx.translate(600, 650);
-      ctx.strokeStyle = theme.fg;
+      ctx.strokeStyle = foreground;
       ctx.lineWidth = 5;
       ctx.globalAlpha = .22;
       ctx.beginPath(); ctx.arc(0, 0, 112, 0, Math.PI * 2); ctx.stroke();
@@ -234,22 +333,29 @@ export function initInteractions({ posts, getCards }) {
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.font = '900 82px Arial, sans-serif';
-      ctx.fillStyle = theme.fg;
+      ctx.fillStyle = foreground;
       ctx.fillText('MD', 0, 0);
       ctx.restore();
+
       drawWrapped(bottomInput.value.trim() || 'YOUR PUNCHLINE', 890, 82, 1010, 94);
-      ctx.fillStyle = theme.fg;
-      ctx.globalAlpha = .65;
+      ctx.fillStyle = foreground;
+      ctx.globalAlpha = .78;
       ctx.font = '700 22px Arial, sans-serif';
       ctx.textAlign = 'left'; ctx.fillText('CREATED IN THE DISTRICT', 76, 1120);
       ctx.textAlign = 'right'; ctx.fillText('✳', 1124, 1120);
       ctx.globalAlpha = 1;
-      const link = document.createElement('a');
-      link.download = 'meme-district-custom-meme.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-      showToast('Your meme is ready. Send it to the group chat.');
+
+      try {
+        const link = document.createElement('a');
+        link.download = 'meme-district-custom-meme.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('Your meme is ready. Send it to the group chat.');
+      } catch (error) {
+        showToast('The meme could not be exported. Try a smaller image.');
+      }
     });
+
     updateMaker();
   }
 

@@ -143,6 +143,9 @@
             <select id="meme-style" name="style">
               <option value="lime">District Lime</option><option value="lilac">Late Night Lilac</option><option value="orange">Deadline Orange</option><option value="paper">Notebook Paper</option>
             </select>
+            <label for="meme-image">Use your own photo <span>OPTIONAL · JPG / PNG / WEBP · 8 MB MAX</span></label>
+            <input id="meme-image" name="image" type="file" accept="image/jpeg,image/png,image/webp">
+            <div class="maker-upload-meta"><span id="meme-image-name">No photo selected</span><button id="meme-image-clear" type="button" hidden>Remove photo</button></div>
             <button class="button button-primary" type="submit">Download my meme <span aria-hidden="true">↗</span></button>
             <p class="maker-note">Your meme is generated in your browser. Nothing is uploaded.</p>
           </form>
